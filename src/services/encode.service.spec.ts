@@ -19,7 +19,7 @@ describe('EncodeService', () => {
         url: 'http://test.com',
       });
       expect(result).toEqual({
-        data: { url: 'http://localhost:3000/a2dw9ijp' },
+        url: 'http://localhost:3000/a2dw9ijp',
       });
     });
   });
