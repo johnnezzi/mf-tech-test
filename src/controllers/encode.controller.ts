@@ -3,7 +3,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { UrlDto } from '../dtos/Url.dto';
-import { EncodeService } from '../../../nestjs copy/src/services/encode.service';
+import { EncodeService } from '../services/encode.service';
 
 @Controller()
 export class EncodeController {

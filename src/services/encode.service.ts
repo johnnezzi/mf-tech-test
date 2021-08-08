@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { UrlDto } from '../../../nestjs copy/src/dtos/url.dto';
+import { UrlDto } from '../dtos/url.dto';
+
 
 const database = {};
 const baseUrl = 'http://localhost:3000/';
