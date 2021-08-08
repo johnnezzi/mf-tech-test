@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UrlDto } from '../dtos/url.dto';
 
 
@@ -31,6 +31,25 @@ export class EncodeService {
     const randomString = Math.random().toString(36).substring(5);
     database[randomString] = url;
     return randomString;
+  }
+
+  async decode(shortUrl: string, db: object) {
+    const getKey = shortUrl.split('/');
+    const url = db[getKey[getKey.length - 1]];
+    if (!url) {
+      console.log('error');
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_FOUND,
+          error: 'URL provided could not be found',
+        },
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    return {
+      url,
+    };
   }
 
   getKeyByValue(object, value) {
