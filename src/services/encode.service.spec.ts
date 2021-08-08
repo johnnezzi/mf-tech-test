@@ -33,4 +33,19 @@ describe('EncodeService', () => {
       expect(encodeService.encode).toHaveBeenCalled();
     });
   });
+
+  describe('checkIfExists', () => {
+    it('returns the code if it exists in the db', async () => {
+      const database = { a2dw9ijp: 'http://test.com'};
+      encodeService.getKeyByValue = jest.fn(() => 'a2dw9ijp');
+      const result = await encodeService.checkIfExists('http://test.com', database);
+      expect(result).toEqual('a2dw9ijp');
+    });
+
+    it('returns null if it does not exists in the db', async () => {
+      const database = { a2dw9ijp: 'http://test.com'};
+      const result = await encodeService.checkIfExists('http://testother.com', database);
+      expect(result).toEqual(null);
+    });
+  });
 });
