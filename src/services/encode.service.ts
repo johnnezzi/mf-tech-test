@@ -33,7 +33,7 @@ export class EncodeService {
     return randomString;
   }
 
-  async decode(shortUrl: string, db: object) {
+  async decode(shortUrl: string, db: object = database) {
     const getKey = shortUrl.split('/');
     const url = db[getKey[getKey.length - 1]];
     if (!url) {
