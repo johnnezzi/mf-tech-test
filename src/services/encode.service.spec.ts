@@ -48,4 +48,13 @@ describe('EncodeService', () => {
       expect(result).toEqual(null);
     });
   });
+
+  describe('encode', () => {
+    it('returns an eight digit string', async () => {
+      const result = await encodeService.encode('http://test.com');
+      expect(result).toHaveLength(10);
+      expect(typeof result).toEqual('string');
+    });
+
+  });
 });
