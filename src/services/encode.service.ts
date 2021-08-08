@@ -7,9 +7,10 @@ const baseUrl = 'http://localhost:3000/';
 @Injectable()
 export class EncodeService {
   async processUrls(urlDto: UrlDto): Promise<{ url: string }> {
-    const code = this.checkIfExists(urlDto.url);
-    // if not encodes a url
-    // returns a url in json object
+    let code = this.checkIfExists(urlDto.url);
+    if (code === null) {
+      code = await this.encode(urlDto.url);
+    }
     return {
       url: baseUrl + code,
     };
@@ -17,5 +18,9 @@ export class EncodeService {
 
   checkIfExists(url: string): any {
     return url;
+  }
+
+  encode(url: string) {
+    return url
   }
 }
