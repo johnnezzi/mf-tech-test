@@ -15,7 +15,17 @@ export class EncodeController {
   @UsePipes(new ValidationPipe())
   async encode(@Body() urlDto: UrlDto) {
     const url = await this.encodeService.processUrls(urlDto);
+    return {
+      data: {
+        url,
+      },
+    };
+  }
 
+  @Post('shrinkme/decode')
+  @UsePipes(new ValidationPipe())
+  async decode(@Body() urlDto: UrlDto) {
+    const url = await this.encodeService.decode(urlDto.url);
     return {
       data: {
         url,
