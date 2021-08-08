@@ -27,7 +27,9 @@ export class EncodeService {
   }
 
   encode(url: string) {
-    return url
+    const randomString = Math.random().toString(36).substring(5);
+    database[randomString] = url;
+    return randomString;
   }
 
   getKeyByValue(object, value) {
