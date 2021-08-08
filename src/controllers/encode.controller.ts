@@ -1,7 +1,7 @@
 import {
   Body,
-  Controller,
-  Post,
+  Controller, Get, Param,
+  Post, Redirect,
   UsePipes,
 } from '@nestjs/common';
 import { UrlDto } from '../dtos/Url.dto';
@@ -31,5 +31,12 @@ export class EncodeController {
         url,
       },
     };
+  }
+
+  @Get('/:code')
+  @Redirect()
+  async redirect(@Param('code') code) {
+    const url = await this.encodeService.redirect(code);
+    return { url: url, statusCode: 303 };
   }
 }
