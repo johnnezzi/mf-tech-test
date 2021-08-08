@@ -1,18 +1,26 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { Encode.ServiceService } from './encode.service.service';
+import { EncodeService } from './encode.service';
 
-describe('Encode.ServiceService', () => {
-  let service: Encode.ServiceService;
+describe('EncodeService', () => {
+  let encodeService: EncodeService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [Encode.ServiceService],
+      providers: [EncodeService],
     }).compile();
 
-    service = module.get<Encode.ServiceService>(Encode.ServiceService);
+    encodeService = module.get<EncodeService>(EncodeService);
   });
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
+  describe('processUrls', () => {
+    it('if a url already exists it returns that url', async () => {
+      encodeService.checkIfExists = jest.fn(() => 'a2dw9ijp');
+      const result = await encodeService.processUrls({
+        url: 'http://test.com',
+      });
+      expect(result).toEqual({
+        data: { url: 'http://localhost:3000/a2dw9ijp' },
+      });
+    });
   });
 });
