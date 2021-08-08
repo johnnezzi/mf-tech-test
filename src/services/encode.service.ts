@@ -52,7 +52,6 @@ export class EncodeService {
 
   redirect(shortenedUrl: string): string {
     const url: string = database[shortenedUrl];
-    console.log(url);
     if (!url) {
       throw new HttpException(
         {
