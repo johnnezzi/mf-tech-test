@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { EncodeService } from './encode.service';
+import { HttpException, NotFoundException } from '@nestjs/common';
 
 describe('EncodeService', () => {
   let encodeService: EncodeService;
@@ -50,9 +51,8 @@ describe('EncodeService', () => {
   });
 
   describe('encode', () => {
-    it('returns an eight digit string', async () => {
+    it('returns an string', async () => {
       const result = await encodeService.encode('http://test.com');
-      expect(result).toHaveLength(8);
       expect(typeof result).toBe('string');
     });
   });
@@ -61,7 +61,16 @@ describe('EncodeService', () => {
     it('it returns a url if it finds the encode', async () => {
       const database = { a2dw9ijp: 'http://test.com'};
       const result = await encodeService.decode('http://localhost:3000/a2dw9ijp', database);
-      expect(result).toEqual('http://test.com');
+      expect(result).toEqual({ url: 'http://test.com' });
+    });
+
+    it('it throws an error if it does not find the shorturl', async () => {
+      const database = { a2dw9ijp: 'http://test.com'};
+      try {
+        await encodeService.decode('http://localhost:3000/skdfjh5r', database);
+      } catch (error) {
+        expect(error).toBeInstanceOf(HttpException);
+      }
     });
   });
 });
