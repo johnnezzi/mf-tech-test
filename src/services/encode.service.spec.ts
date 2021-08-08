@@ -19,9 +19,7 @@ describe('EncodeService', () => {
       const result = await encodeService.processUrls({
         url: 'http://test.com',
       });
-      expect(result).toEqual({
-        url: 'http://localhost:3000/a2dw9ijp',
-      });
+      expect(result).toEqual('http://localhost:3000/a2dw9ijp');
     });
 
     it('if a url doesnt exist it calls the encode function', async () => {
@@ -40,13 +38,13 @@ describe('EncodeService', () => {
         url: 'http://test.com',
       });
       encodeService.checkIfExists = jest.fn(() => {
-        const getCode = resultOne.url.split('/');
+        const getCode = resultOne.split('/');
         return getCode[getCode.length - 1];
       });
       const resultTwo = await encodeService.processUrls({
         url: 'http://test.com',
       });
-      expect(resultOne.url).toEqual(resultTwo.url);
+      expect(resultOne).toEqual(resultTwo);
     });
   });
 
@@ -73,10 +71,13 @@ describe('EncodeService', () => {
   });
 
   describe('decode', () => {
-    it('it returns a url if it finds the encode', async () => {
+    it('it returns a url if it finds the code', async () => {
       const database = { a2dw9ijp: 'http://test.com'};
-      const result = await encodeService.decode('http://localhost:3000/a2dw9ijp', database);
-      expect(result).toEqual({ url: 'http://test.com' });
+      const result = await encodeService.decode(
+        'http://localhost:3000/a2dw9ijp',
+        database,
+      );
+      expect(result).toEqual('http://test.com');
     });
 
     it('it throws an error if it does not find the shorturl', async () => {

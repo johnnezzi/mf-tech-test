@@ -1,6 +1,6 @@
 import { IsString } from 'class-validator';
 
-export class ResponseRto {
+export class UrlDto {
   @IsString()
-  data: { url: string };
+  url: string;
 }
