@@ -37,7 +37,6 @@ export class EncodeService {
     const getKey = shortUrl.split('/');
     const url = db[getKey[getKey.length - 1]];
     if (!url) {
-      console.log('error');
       throw new HttpException(
         {
           status: HttpStatus.NOT_FOUND,
@@ -54,5 +53,18 @@ export class EncodeService {
 
   getKeyByValue(object, value) {
     return Object.keys(object).find((key) => object[key] === value);
+  }
+
+  redirect(code: string) {
+    const url = database[code];
+    if (!url) {
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_FOUND,
+          error: 'URL provided could not be found',
+        },
+        HttpStatus.NOT_FOUND,
+      );
+    }
   }
 }

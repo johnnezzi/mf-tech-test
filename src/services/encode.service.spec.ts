@@ -33,6 +33,21 @@ describe('EncodeService', () => {
       });
       expect(encodeService.encode).toHaveBeenCalled();
     });
+
+    it('return the same shorturl if sent the same url', async () => {
+      encodeService.checkIfExists = jest.fn(() => null);
+      const resultOne = await encodeService.processUrls({
+        url: 'http://test.com',
+      });
+      encodeService.checkIfExists = jest.fn(() => {
+        const getCode = resultOne.url.split('/');
+        return getCode[getCode.length - 1];
+      });
+      const resultTwo = await encodeService.processUrls({
+        url: 'http://test.com',
+      });
+      expect(resultOne.url).toEqual(resultTwo.url);
+    });
   });
 
   describe('checkIfExists', () => {
