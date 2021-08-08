@@ -56,4 +56,12 @@ describe('EncodeService', () => {
       expect(typeof result).toBe('string');
     });
   });
+
+  describe('decode', () => {
+    it('it returns a url if it finds the encode', async () => {
+      const database = { a2dw9ijp: 'http://test.com'};
+      const result = await encodeService.decode('http://localhost:3000/a2dw9ijp', database);
+      expect(result).toEqual('http://test.com');
+    });
+  });
 });
