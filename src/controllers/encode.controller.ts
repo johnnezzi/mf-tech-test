@@ -10,7 +10,14 @@ export class EncodeController {
   constructor(private encodeService: EncodeService) {}
 
   @Post('shrinkme/encode')
+
   async encode(@Body() urlDto: UrlDto) {
-    return await this.encodeService.processUrls(urlDto);
+    const url = await this.encodeService.processUrls(urlDto);
+
+    return {
+      data: {
+        url,
+      },
+    };
   }
 }
