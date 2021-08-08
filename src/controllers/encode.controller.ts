@@ -1,16 +1,16 @@
 import {
-  Body,
-  Controller,
-  NotImplementedException,
+  Body, Controller,
   Post,
 } from '@nestjs/common';
-import { ShortenedUrlDto } from '../dtos/shortenedUrl.dto';
 import { UrlDto } from '../dtos/Url.dto';
+import { EncodeService } from '../../../nestjs copy/src/services/encode.service';
 
 @Controller()
 export class EncodeController {
-  @Post('/encode')
-  encode(@Body() urlDto: UrlDto): ShortenedUrlDto {
-    throw new NotImplementedException();
+  constructor(private encodeService: EncodeService) {}
+
+  @Post('shrinkme/encode')
+  async encode(@Body() urlDto: UrlDto) {
+    return await this.encodeService.processUrls(urlDto);
   }
 }
